@@ -1,0 +1,17 @@
+import express from "express";
+import cors from "cors";
+import { connectDB } from "./config/db";
+import authRouter  from "./routes/auth.routes";
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/auth", authRouter);
+
+connectDB();
+
+app.listen(3000, () => {
+    console.log("Server running at http://localhost:3000");
+});
