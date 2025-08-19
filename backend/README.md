@@ -8,20 +8,27 @@ Este projeto é o backend de um Sistema de Atividades Escolares, desenvolvido em
 ```bash
 backend/
  ├─ src/
- │   ├─ index.ts               # Ponto de entrada da aplicação
+ │   ├─ index.ts                 # Ponto de entrada da aplicação
  │   ├─ routes/
- │   │    └─ auth.routes.ts    # Rotas de autenticação
+ │   │    └─ auth.routes.ts      # Rotas de autenticação
  │   ├─ controllers/
- │   │    └─ auth.controller.ts # Lógica das rotas de autenticação
+ │   │    └─ AuthController.ts   # Controller de autenticação (classe)
  │   ├─ services/
- │   │    └─ auth.service.ts    # Serviços de autenticação
+ │   │    └─ AuthService.ts      # Serviços de autenticação (classe)
  │   ├─ models/
- │   │    └─ user.model.ts      # Modelo de usuário
+ │   │    └─ User.ts             # Modelo de usuário (Mongoose)
  │   ├─ middlewares/
- │   │    └─ auth.middleware.ts # Middleware de autenticação JWT
+ │   │    └─ auth.middleware.ts  # Middleware de autenticação JWT
  │   ├─ config/
- │   │    └─ db.ts             # Configuração do MongoDB
+ │   │    ├─ db.ts               # Configuração do MongoDB
+ │   │    └─ env.ts              # Carregamento das variáveis de ambiente
+ ├─ .env                         # Variáveis de ambiente reais (não versionar)
+ ├─ .env.example                 # Exemplo de variáveis de ambiente
+ ├─ .gitignore                   # Ignorar node_modules, dist, .env etc
+ ├─ .dockerignore                # Ignorar arquivos desnecessários no build
+ ├─ Dockerfile                   # Dockerfile da API
+ ├─ docker-compose.yml           # Orquestração com MongoDB
  ├─ package.json
- ├─ tsconfig.json
- └─ .env                       # Variáveis de ambiente (não versionar)
+ └─ tsconfig.json
+
 ```
