@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
+
 import { connectDB } from "./config/db";
 import authRouter  from "./routes/auth.routes";
+import { ENV } from "./config/env";
 
 const app = express();
 
@@ -12,6 +14,6 @@ app.use("/api/auth", authRouter);
 
 connectDB();
 
-app.listen(3000, () => {
+app.listen(ENV.PORT, () => {
     console.log("Server running at http://localhost:3000");
 });

@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User, { IUser } from "../models/user.model";
 
-const JWT_SECRET = "mysecretkey"
+import User from "../models/user.model";
+import { ENV } from "../config/env";
 
 export class AuthService {
     async register(email: string, password: string) {
@@ -31,7 +31,7 @@ export class AuthService {
 
         const token = jwt.sign(
             { id: user._id, email: user.email },
-            JWT_SECRET,
+            ENV.JWT_SECRET,
             {
                 expiresIn: "1h",
             }
