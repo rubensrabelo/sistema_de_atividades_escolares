@@ -1,11 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import { ENV } from "../config/env.js";
-import User from "../models/user.model.js";
-import { RegisterDTO } from "../dtos/auth/register.dto.js";
-import { LoginDTO } from "../dtos/auth/login.dto.js";
-import { UserResponseDTO } from "../dtos/user/user-response.dto.js";
+import { ENV } from "../config/env";
+import User from "../models/user.model";
+import { RegisterDTO } from "../dtos/auth/register.dto";
+import { LoginDTO } from "../dtos/auth/login.dto";
+import { UserResponseDTO } from "../dtos/user/user-response.dto";
 
 export class AuthService {
     async register(data: RegisterDTO): Promise<UserResponseDTO> {
@@ -32,6 +32,7 @@ export class AuthService {
             lastName: savedUser.lastName,
             email: savedUser.email,
             role: savedUser.role,
+            active: savedUser.active,
             createdAt: savedUser.createdAt!,
             updatedAt: savedUser.updatedAt!,
         };

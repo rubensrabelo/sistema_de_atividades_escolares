@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
-import { AuthService } from "../services/auth.service.js";
-import { RegisterDTO } from "../dtos/auth/register.dto.js";
-import { LoginDTO } from "../dtos/auth/login.dto.js";
+import { AuthService } from "../services/auth.service";
+import { RegisterDTO } from "../dtos/auth/register.dto";
+import { LoginDTO } from "../dtos/auth/login.dto";
 
 export class AuthController {
     private authService: AuthService;

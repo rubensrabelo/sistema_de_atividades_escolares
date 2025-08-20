@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { IUserDocument } from "./interfaces/user.interface.js";
+import { IUserDocument } from "./interfaces/user.interface";
 
 const UserSchema = new Schema<IUserDocument>(
   {
@@ -13,6 +13,7 @@ const UserSchema = new Schema<IUserDocument>(
       default: "student",
       required: true,
     },
+    active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

@@ -6,6 +6,7 @@ export interface IUser {
   email: string;
   password: string;
   role: "student" | "teacher";
+  active: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
