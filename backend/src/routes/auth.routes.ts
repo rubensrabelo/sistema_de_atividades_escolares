@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { AuthController } from "../controllers/auth.controller";
-import { authMiddleware } from "../middlewares/auth.middleware";
+
+import { AuthController } from "../controllers/auth.controller.js";
+import { RegisterDTO } from "../dtos/auth/register.dto.js";
+import { LoginDTO } from "../dtos/auth/login.dto.js";
+import { validationMiddleware } from "../middlewares/validation.middleware.js";
 
 const router = Router();
-const authController = new AuthController();
+const controller = new AuthController();
 
-router.post("/register", authController.register);
-router.post("/login", authController.login);
+router.post("/register", validationMiddleware(RegisterDTO), (req, res) => controller.register(req, res));
+router.post("/login", validationMiddleware(LoginDTO), (req, res) => controller.login(req, res));
 
 export default router;
