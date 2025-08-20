@@ -1,36 +1,46 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import User from "../models/user.model";
+import User, { IUser } from "../models/user.model";
 import { ENV } from "../config/env";
 
 export class AuthService {
-    async register(email: string, password: string) {
+    async register(
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string,
+        role: "student" | "teacher"
+    ): Promise<IUser> {
         const existingUser = await User.findOne({ email });
-        if (existingUser)
-            throw new Error("This email is already in use.");
+        if (existingUser) {
+            throw new Error("Email already registered");
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({
+
+        const user = new User({
+            firstName,
+            lastName,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            role,
         });
 
-        await newUser.save();
-        return { message: "User registered successfully!" }
+        return user.save();
     }
 
     async login(email: string, password: string) {
         const user = await User.findOne({ email });
         if (!user)
-            throw new Error("User not found.")
+            throw new Error("Invalid credentials.")
 
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid)
             throw new Error("Invalid password.");
 
         const token = jwt.sign(
-            { id: user._id, email: user.email },
+            { id: user._id, email: user.email, role: user.role },
             ENV.JWT_SECRET,
             {
                 expiresIn: "1h",
@@ -38,12 +48,5 @@ export class AuthService {
         );
 
         return { token };
-    }
-
-    async getProfile(userId: string) {
-        const user = await User.findById(userId).select("-password");
-        if (!user)
-            throw new Error("User not found.")
-        return user;
     }
 }
