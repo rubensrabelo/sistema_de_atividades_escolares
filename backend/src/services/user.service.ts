@@ -6,27 +6,26 @@ import { UserUpdateDTO } from "../dtos/user/user-update.dto";
 
 export class UserService {
     async getByIdWithPassword(id: string): Promise<IUserDocument | null> {
-    return await User.findById(id).select("+password");
-  }
+        return await User.findById(id).select("+password");
+    }
 
     async update(id: string, updateData: UserUpdateDTO): Promise<IUserDocument | null> {
         if (updateData.password) {
-            const hashedPassword = await bcrypt.hash(updateData.password, 10);
-            updateData.password = hashedPassword;
+            updateData.password = await bcrypt.hash(updateData.password, 10);
         }
 
-        return await User.findByIdAndUpdate(
-            id,
+        return await User.findOneAndUpdate(
+            { _id: id, active: true },
             { $set: updateData },
             { new: true }
-        ).where({ active: true });
+        );
     }
 
     async delete(id: string): Promise<IUserDocument | null> {
-        return await User.findByIdAndUpdate(
-            id,
+        return await User.findOneAndUpdate(
+            { _id: id, active: true },
             { $set: { active: false } },
             { new: true }
-        ).where({ active: true });
+        );
     }
 }

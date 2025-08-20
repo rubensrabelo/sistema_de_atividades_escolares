@@ -10,8 +10,8 @@ const controller = new UserController();
 
 router.use(authMiddleware);
 
-router.get("/me", authMiddleware, (req, res) => controller.getMe(req, res));
-router.put("/:id", validationMiddleware(UserUpdateDTO), (req, res) => controller.updateUser(req, res));
-router.delete("/:id", (req, res) => controller.deleteUser(req, res));
+router.get("/me", (req, res) => controller.getMe(req, res));
+router.put("/me", validationMiddleware(UserUpdateDTO), (req, res) => controller.update(req, res));
+router.delete("/me", (req, res) => controller.delete(req, res));
 
 export default router;
