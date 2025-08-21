@@ -3,6 +3,23 @@
 ## Descrição
 Este projeto é o backend de um Sistema de Atividades Escolares, desenvolvido em TypeScript com Node.js, utilizando MongoDB como banco de dados e JWT para autenticação. Ele permite o gerenciamento de usuários, autenticação e outras funcionalidades relacionadas ao sistema escolar.
 
+## Diagrama de Classes
+
+```mermaid
+classDiagram
+  direction LR
+  class Teacher {
+    - atributo
+  }
+
+  class Course {
+    - atributo
+  }
+
+  Teacher "1" -- "*" Course
+```
+
+
 ## Estrutura do projeto
 
 ```bash
