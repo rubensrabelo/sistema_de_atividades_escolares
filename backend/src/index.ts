@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectDB } from "./config/db";
 import authRouter  from "./routes/auth.routes";
 import userRouter  from "./routes/user.routes";
+import courseRouter  from "./routes/course.routes";
 import { ENV } from "./config/env";
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/courses", courseRouter);
 
 connectDB();
 
