@@ -1,7 +1,8 @@
 export interface CourseResponseDTO {
   id: string;
-  name: string;
+  title: string;
   description?: string;
+  active: boolean;
   createdBy: string;
   createdAt: Date;
   updatedAt: Date;

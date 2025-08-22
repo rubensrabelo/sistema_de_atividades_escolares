@@ -3,7 +3,7 @@ import { IsOptional, IsString } from "class-validator";
 export class CourseUpdateDTO {
   @IsString()
   @IsOptional()
-  name?: string;
+  title?: string;
 
   @IsString()
   @IsOptional()
