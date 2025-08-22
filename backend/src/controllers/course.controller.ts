@@ -65,4 +65,24 @@ export class CourseController {
             return res.status(500).json({ message: "Error fetching courses", error });
         }
     }
+
+    async getByCreator(req: AuthRequest, res: Response) {
+    try {
+      const teacherId = req.user!.id;
+
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+
+      const { data, total } = await this.courseService.getByCreator(teacherId, page, limit);
+
+      return res.json({
+        data,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+      });
+    } catch (error) {
+      return res.status(500).json({ message: "Error fetching courses by creator", error });
+    }
+  }
 }

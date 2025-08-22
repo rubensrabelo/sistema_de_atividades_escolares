@@ -26,4 +26,14 @@ export class CourseService {
 
     return { data, total };
   }
+
+  async getByCreator(teacherId: string, page: number, limit: number): Promise<{ data: ICourseDocument[]; total: number }> {
+    const skip = (page - 1) * limit;
+    const [data, total] = await Promise.all([
+      Course.find({ createBy: teacherId, active: true }).skip(skip).limit(limit),
+      Course.countDocuments({ createBy: teacherId, active: true }),
+    ]);
+
+    return { data, total };
+  }
 }

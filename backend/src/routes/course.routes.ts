@@ -37,4 +37,11 @@ router.get(
     (req, res) => courseController.getAll(req, res)
 );
 
+router.get(
+  "/my-courses",
+  authMiddleware,
+  hasRole("teacher"),
+  (req, res) => courseController.getByCreator(req, res)
+);
+
 export default router;
