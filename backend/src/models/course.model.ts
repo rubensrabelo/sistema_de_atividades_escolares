@@ -11,6 +11,7 @@ const courseSchema = new Schema<CourseDocument>(
     description: { type: String },
     active: { type: Boolean, default: true },
     createBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    students: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

@@ -5,6 +5,7 @@ export interface ICourse {
   description?: string;
   active: boolean;
   createBy: string | Types.ObjectId;
+  students?: string | Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 }

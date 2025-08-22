@@ -9,8 +9,7 @@ import { CourseUpdateDTO } from "../dtos/course/course-update.dto";
 const router = Router();
 const courseController = new CourseController();
 
-router.post(
-    "/",
+router.post("/",
     authMiddleware,
     hasRole("teacher"),
     validationMiddleware(CourseCreateDTO),

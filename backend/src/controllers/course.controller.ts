@@ -3,7 +3,11 @@ import { CourseService } from "../services/course.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
 
 export class CourseController {
-    private courseService = new CourseService();
+    private courseService: CourseService;
+
+    constructor() {
+        this.courseService = new CourseService();
+    }
 
     async create(req: AuthRequest, res: Response) {
         try {

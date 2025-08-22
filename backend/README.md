@@ -16,7 +16,7 @@ classDiagram
     - atributo
   }
 
-  Teacher "1" -- "*" Course
+  Teacher "1" -- "*" Course: Cria_o
 ```
 
 
