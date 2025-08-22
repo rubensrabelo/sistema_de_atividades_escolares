@@ -8,15 +8,37 @@ Este projeto é o backend de um Sistema de Atividades Escolares, desenvolvido em
 ```mermaid
 classDiagram
   direction LR
+  class User {
+    - firstName: string
+    - lastName: string
+    - email: string
+    - password: string
+    - role: "student" | "teacher"
+    - active: boolean
+    - createdAt?: Date
+    - updatedAt?: Date
+  }
+
   class Teacher {
-    - atributo
+  }
+
+  class Student {
   }
 
   class Course {
-    - atributo
+    - title: string;
+    - description?: string;
+    - active: boolean;
+    - createBy: string | Types.ObjectId;
+    - students?: string | Types.ObjectId;
+    - createdAt?: Date;
+    - updatedAt?: Date;
   }
 
-  Teacher "1" -- "*" Course: Cria_o
+  User "1" <|-- Teacher
+  User "1" <|-- Student
+  Teacher "1" -- "*" Course: creates_a
+  Student "1" -- "*" Course: enrolls_in
 ```
 
 
@@ -33,15 +55,16 @@ backend/
  │   │    └─ interfaces/           # Interfaces TypeScript para os modelos
  │   ├─ dtos/                      # Data Transfer Objects para validação e respostas
  │   │    ├─ auth/                 # DTOs de autenticação (login, registro)
+ │   │    └─ course/               # DTOs de cursos (resposta, update, etc.)
  │   │    └─ user/                 # DTOs de usuário (resposta, update, etc.)
  │   ├─ middlewares/               # Middlewares da aplicação (auth, validação, etc.)
  │   └─ config/                    # Configurações do projeto (DB, env, etc.)
  ├─ .env                           # Variáveis de ambiente reais (não versionar)
  ├─ .env.example                   # Exemplo de variáveis de ambiente
- ├─ .gitignore                      # Ignorar node_modules, dist, .env etc
- ├─ .dockerignore                   # Ignorar arquivos desnecessários no build
- ├─ Dockerfile                      # Dockerfile da API
- ├─ docker-compose.yml              # Orquestração com MongoDB
- ├─ package.json                    # Dependências e scripts do Node.js
- └─ tsconfig.json                   # Configuração do TypeScript
+ ├─ .gitignore                     # Ignorar node_modules, dist, .env etc
+ ├─ .dockerignore                  # Ignorar arquivos desnecessários no build
+ ├─ Dockerfile                     # Dockerfile da API
+ ├─ docker-compose.yml             # Orquestração com MongoDB
+ ├─ package.json                   # Dependências e scripts do Node.js
+ └─ tsconfig.json                  # Configuração do TypeScript
 ```
