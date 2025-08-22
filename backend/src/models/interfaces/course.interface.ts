@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { Types, Document } from "mongoose";
 
 export interface ICourse {
   title: string;
@@ -8,3 +8,5 @@ export interface ICourse {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface ICourseDocument extends ICourse, Document { }
