@@ -10,7 +10,7 @@ const courseSchema = new Schema<CourseDocument>(
     title: { type: String, required: true },
     description: { type: String },
     active: { type: Boolean, default: true },
-    createBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    createBy:   { type: Schema.Types.ObjectId, ref: "User", required: true },
     students: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }

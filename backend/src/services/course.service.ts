@@ -4,8 +4,11 @@ import { CourseCreateDTO } from "../dtos/course/course-create.dto";
 import { CourseUpdateDTO } from "../dtos/course/course-update.dto";
 
 export class CourseService {
-  async create(data: CourseCreateDTO): Promise<ICourseDocument> {
-    const course = new Course(data);
+  async create(data: CourseCreateDTO, userId: string): Promise<ICourseDocument> {
+    const course = new Course({
+      ...data,
+      createBy: userId
+    });
     return await course.save();
   }
 

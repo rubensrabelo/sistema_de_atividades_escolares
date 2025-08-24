@@ -11,7 +11,8 @@ export class CourseController {
 
     async create(req: AuthRequest, res: Response) {
         try {
-            const course = await this.courseService.create(req.body);
+            const userId = req.user!.id;
+            const course = await this.courseService.create(req.body, userId);
             return res.status(201).json(course);
         } catch (error) {
             return res.status(500).json({ message: "Error creating course", error });
