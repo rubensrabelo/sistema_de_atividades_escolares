@@ -1,11 +1,7 @@
 import { Schema, model, Document, Types } from "mongoose";
-import { ICourse } from "./interfaces/course.interface";
+import { ICourseDocument } from "./interfaces/course.interface";
 
-export interface CourseDocument extends ICourse, Document {
-  _id: Types.ObjectId;
-}
-
-const courseSchema = new Schema<CourseDocument>(
+const courseSchema = new Schema<ICourseDocument>(
   {
     title: { type: String, required: true },
     description: { type: String },
@@ -16,4 +12,4 @@ const courseSchema = new Schema<CourseDocument>(
   { timestamps: true }
 );
 
-export default model<CourseDocument>("Course", courseSchema);
+export default model<ICourseDocument>("Course", courseSchema);

@@ -10,4 +10,6 @@ export interface ICourse {
   updatedAt?: Date;
 }
 
-export interface ICourseDocument extends ICourse, Document { }
+export interface ICourseDocument extends ICourse, Document {
+  _id: Types.ObjectId;
+}
