@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { CourseService } from "../services/course.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
+import { CourseResponseDTO } from "../dtos/course/course-response.dto";
 
 export class CourseController {
     private courseService: CourseService;
@@ -9,50 +10,49 @@ export class CourseController {
         this.courseService = new CourseService();
     }
 
-    async create(req: AuthRequest, res: Response) {
+    async create(req: AuthRequest, res: Response): Promise<Response> {
         try {
-            const userId = req.user!.id;
-            const course = await this.courseService.create(req.body, userId);
+            const userId: string = req.user!.id;
+            const course: CourseResponseDTO = await this.courseService.create(req.body, userId);
             return res.status(201).json(course);
         } catch (error) {
-            return res.status(500).json({ message: "Error creating course", error });
+            return res.status(500).json({ message: "Error creating course.", error });
         }
     }
 
-    async update(req: AuthRequest, res: Response) {
+    async update(req: AuthRequest, res: Response): Promise<Response> {
         try {
-            const { id } = req.params;
-            const course = await this.courseService.update(id, req.body);
+            const { id } = req.params as { id: string };
+            const course: CourseResponseDTO | null = await this.courseService.update(id, req.body);
+
+            if (!course)
+                return res.status(404).json({ message: "Course not found." });
+
+            return res.status(200).json(course);
+        } catch (error) {
+            return res.status(500).json({ message: "Error updating course.", error });
+        }
+    }
+
+    async delete(req: AuthRequest, res: Response): Promise<Response> {
+        try {
+            const { id } = req.params as { id: string };
+            const course: CourseResponseDTO | null = await this.courseService.delete(id);
 
             if (!course) {
-                return res.status(404).json({ message: "Course not found" });
+                return res.status(404).json({ message: "Course not found." });
             }
 
-            return res.json(course);
+            return res.status(204).send();
         } catch (error) {
-            return res.status(500).json({ message: "Error updating course", error });
+            return res.status(500).json({ message: "Error deleting course.", error });
         }
     }
 
-    async delete(req: AuthRequest, res: Response) {
+    async getAll(req: AuthRequest, res: Response): Promise<Response> {
         try {
-            const { id } = req.params;
-            const course = await this.courseService.delete(id);
-
-            if (!course) {
-                return res.status(404).json({ message: "Course not found" });
-            }
-
-            return res.json({ message: "Course deleted (soft) successfully" });
-        } catch (error) {
-            return res.status(500).json({ message: "Error deleting course", error });
-        }
-    }
-
-    async getAll(req: AuthRequest, res: Response) {
-        try {
-            const page = parseInt(req.query.page as string) || 1;
-            const limit = parseInt(req.query.limit as string) || 10;
+            const page: number = parseInt(req.query.page as string) || 1;
+            const limit: number = parseInt(req.query.limit as string) || 10;
 
             const { data, total } = await this.courseService.getAll(page, limit);
 
@@ -67,23 +67,23 @@ export class CourseController {
         }
     }
 
-    async getByCreator(req: AuthRequest, res: Response) {
-    try {
-      const teacherId = req.user!.id;
+    async getByCreator(req: AuthRequest, res: Response): Promise<Response> {
+        try {
+            const teacherId: string | null = req.user!.id;
 
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
+            const page: number = parseInt(req.query.page as string) || 1;
+            const limit: number = parseInt(req.query.limit as string) || 10;
 
-      const { data, total } = await this.courseService.getByCreator(teacherId, page, limit);
+            const { data, total } = await this.courseService.getByCreator(teacherId, page, limit);
 
-      return res.json({
-        data,
-        total,
-        page,
-        totalPages: Math.ceil(total / limit),
-      });
-    } catch (error) {
-      return res.status(500).json({ message: "Error fetching courses by creator", error });
+            return res.json({
+                data,
+                total,
+                page,
+                totalPages: Math.ceil(total / limit),
+            });
+        } catch (error) {
+            return res.status(500).json({ message: "Error fetching courses by creator", error });
+        }
     }
-  }
 }
