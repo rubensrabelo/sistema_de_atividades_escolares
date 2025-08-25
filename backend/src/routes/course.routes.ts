@@ -6,8 +6,8 @@ import { validationMiddleware } from "../middlewares/validation.middleware";
 import { CourseCreateDTO } from "../dtos/course/course-create.dto";
 import { CourseUpdateDTO } from "../dtos/course/course-update.dto";
 
-const router = Router();
-const courseController = new CourseController();
+const router: Router = Router();
+const courseController: CourseController = new CourseController();
 
 router.post("/",
     authMiddleware,

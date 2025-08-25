@@ -3,8 +3,8 @@ import { EnrollmentController } from "../controllers/enrollment.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { hasRole } from "../middlewares/role.middleware";
 
-const router = Router();
-const enrollmentController = new EnrollmentController();
+const router: Router = Router();
+const enrollmentController: EnrollmentController = new EnrollmentController();
 
 router.post("/:courseId/enroll", authMiddleware, hasRole("student"), (req, res) => enrollmentController.enroll(req, res));
 router.post("/:courseId/unenroll", authMiddleware, hasRole("student"), (req, res) => enrollmentController.unenroll(req, res));
