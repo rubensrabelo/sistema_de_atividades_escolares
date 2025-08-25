@@ -3,6 +3,7 @@ export class UserResponseDTO {
   firstName: string;
   lastName: string;
   email: string;
+  password?: string;
   active: boolean;
   role: "student" | "teacher";
   createdAt: Date;
@@ -16,7 +17,8 @@ export class UserResponseDTO {
     role: "student" | "teacher",
     active: boolean,
     createdAt: Date,
-    updatedAt: Date
+    updatedAt: Date,
+    password?: string
   ) {
     this.id = id;
     this.firstName = firstName;
@@ -26,5 +28,8 @@ export class UserResponseDTO {
     this.active = active;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+
+    if(password) 
+      this.password = password;
   }
 }
