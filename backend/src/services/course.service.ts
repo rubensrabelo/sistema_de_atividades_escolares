@@ -2,40 +2,108 @@ import Course from "../models/course.model";
 import { ICourseDocument } from "../models/interfaces/course.interface";
 import { CourseCreateDTO } from "../dtos/course/course-create.dto";
 import { CourseUpdateDTO } from "../dtos/course/course-update.dto";
+import { CourseResponseDTO } from "../dtos/course/course-response.dto";
 
 export class CourseService {
-  async create(data: CourseCreateDTO, userId: string): Promise<ICourseDocument> {
-    const course = new Course({
+  async create(data: CourseCreateDTO, userId: string): Promise<CourseResponseDTO> {
+    const course: ICourseDocument = new Course({
       ...data,
       createBy: userId
     });
-    return await course.save();
+    const courseDTO: ICourseDocument = await course.save();
+    return new CourseResponseDTO(
+      courseDTO.id,
+      courseDTO.title,
+      courseDTO.active,
+      courseDTO.createBy,
+      courseDTO.createdAt!,
+      courseDTO.updatedAt!,
+    );
   }
 
-  async update(id: string, data: CourseUpdateDTO): Promise<ICourseDocument | null> {
-    return await Course.findByIdAndUpdate(id, { $set: data }, { new: true });
+  async update(id: string, data: CourseUpdateDTO): Promise<CourseResponseDTO | null> {
+    const courseDTO: ICourseDocument | null = await Course.findByIdAndUpdate(id, { $set: data }, { new: true });
+
+    if (!courseDTO)
+      return null;
+
+    return new CourseResponseDTO(
+      courseDTO.id,
+      courseDTO.title,
+      courseDTO.active,
+      courseDTO.createBy,
+      courseDTO.createdAt!,
+      courseDTO.updatedAt!,
+    );
   }
 
-  async delete(id: string): Promise<ICourseDocument | null> {
-    return await Course.findByIdAndUpdate(id, { $set: { active: false } }, { new: true });
+  async delete(id: string): Promise<CourseResponseDTO | null> {
+    const courseDTO: ICourseDocument | null = await Course.findByIdAndUpdate(id, { $set: { active: false } }, { new: true });
+
+    if (!courseDTO)
+      return null;
+
+    return new CourseResponseDTO(
+      courseDTO.id,
+      courseDTO.title,
+      courseDTO.active,
+      courseDTO.createBy,
+      courseDTO.createdAt!,
+      courseDTO.updatedAt!,
+    );
   }
 
-  async getAll(page: number, limit: number): Promise<{ data: ICourseDocument[]; total: number }> {
+  async getAll(
+    page: number,
+    limit: number
+  ): Promise<{ data: CourseResponseDTO[]; total: number }> {
     const skip = (page - 1) * limit;
-    const [data, total] = await Promise.all([
+
+    const [courses, total] = await Promise.all([
       Course.find({ active: true }).skip(skip).limit(limit),
       Course.countDocuments({ active: true }),
     ]);
 
+    const data = courses.map(
+      (course: ICourseDocument) =>
+        new CourseResponseDTO(
+          course._id.toString(),
+          course.title,
+          course.active,
+          course.createBy.toString(),
+          course.createdAt!,
+          course.updatedAt!,
+          course.description ?? undefined,
+        )
+    );
+
     return { data, total };
   }
 
-  async getByCreator(teacherId: string, page: number, limit: number): Promise<{ data: ICourseDocument[]; total: number }> {
+  async getByCreator(
+    teacherId: string,
+    page: number,
+    limit: number
+  ): Promise<{ data: CourseResponseDTO[]; total: number }> {
     const skip = (page - 1) * limit;
-    const [data, total] = await Promise.all([
+
+    const [courses, total] = await Promise.all([
       Course.find({ createBy: teacherId, active: true }).skip(skip).limit(limit),
       Course.countDocuments({ createBy: teacherId, active: true }),
     ]);
+
+    const data = courses.map(
+      (course: ICourseDocument) =>
+        new CourseResponseDTO(
+          course._id.toString(),
+          course.title,
+          course.active,
+          course.createBy.toString(),
+          course.createdAt!,
+          course.updatedAt!,
+          course.description ?? undefined,
+        )
+    );
 
     return { data, total };
   }
