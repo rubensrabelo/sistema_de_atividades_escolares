@@ -57,14 +57,14 @@ export class CourseService {
     page: number,
     limit: number
   ): Promise<{ data: CourseResponseDTO[]; total: number }> {
-    const skip = (page - 1) * limit;
+    const skip: number = (page - 1) * limit;
 
-    const [courses, total] = await Promise.all([
+    const [courses, total]: [ICourseDocument[], number] = await Promise.all([
       Course.find({ active: true }).skip(skip).limit(limit),
       Course.countDocuments({ active: true }),
     ]);
 
-    const data = courses.map(
+    const data: CourseResponseDTO[] = courses.map(
       (course: ICourseDocument) =>
         new CourseResponseDTO(
           course._id.toString(),
@@ -85,14 +85,14 @@ export class CourseService {
     page: number,
     limit: number
   ): Promise<{ data: CourseResponseDTO[]; total: number }> {
-    const skip = (page - 1) * limit;
+    const skip: number = (page - 1) * limit;
 
-    const [courses, total] = await Promise.all([
+    const [courses, total]: [ICourseDocument[], number] = await Promise.all([
       Course.find({ createBy: teacherId, active: true }).skip(skip).limit(limit),
       Course.countDocuments({ createBy: teacherId, active: true }),
     ]);
 
-    const data = courses.map(
+    const data: CourseResponseDTO[] = courses.map(
       (course: ICourseDocument) =>
         new CourseResponseDTO(
           course._id.toString(),
