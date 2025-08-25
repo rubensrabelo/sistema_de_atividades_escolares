@@ -3,6 +3,13 @@ import { CourseService } from "../services/course.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
 import { CourseResponseDTO } from "../dtos/course/course-response.dto";
 
+interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
 export class CourseController {
     private courseService: CourseService;
 
@@ -49,12 +56,14 @@ export class CourseController {
         }
     }
 
-    async getAll(req: AuthRequest, res: Response): Promise<Response> {
+    async getAll(req: AuthRequest, res: Response): Promise<
+    Response<PaginatedResponse<CourseResponseDTO> | { message: string; error?: any }>
+    > {
         try {
             const page: number = parseInt(req.query.page as string) || 1;
             const limit: number = parseInt(req.query.limit as string) || 10;
 
-            const { data, total } = await this.courseService.getAll(page, limit);
+            const { data, total }: { data: CourseResponseDTO[]; total: number } = await this.courseService.getAll(page, limit);
 
             return res.json({
                 data,
@@ -67,14 +76,16 @@ export class CourseController {
         }
     }
 
-    async getByCreator(req: AuthRequest, res: Response): Promise<Response> {
+    async getByCreator(req: AuthRequest, res: Response): Promise<
+    Response<PaginatedResponse<CourseResponseDTO> | { message: string; error?: any }>
+    > {
         try {
             const teacherId: string | null = req.user!.id;
 
             const page: number = parseInt(req.query.page as string) || 1;
             const limit: number = parseInt(req.query.limit as string) || 10;
 
-            const { data, total } = await this.courseService.getByCreator(teacherId, page, limit);
+            const { data, total }: { data: CourseResponseDTO[]; total: number } = await this.courseService.getByCreator(teacherId, page, limit);
 
             return res.json({
                 data,
