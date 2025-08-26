@@ -36,10 +36,7 @@ export class AuthController {
 
             return res.status(200).json({ tokenDTO });
         } catch (error: any) {
-            if (error instanceof InvalidCredentialsError)
-                return res.status(error.statusCode).json({ message: error.message });
-
-            if (error instanceof UserDeactivatedError)
+            if (error instanceof InvalidCredentialsError || error instanceof UserDeactivatedError)
                 return res.status(error.statusCode).json({ message: error.message });
 
             return res.status(400).json({ error: error.message });

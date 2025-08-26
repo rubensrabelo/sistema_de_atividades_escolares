@@ -4,13 +4,14 @@ import User from "../models/user.model";
 import { IUserDocument } from "../models/interfaces/user.interface";
 import { UserUpdateDTO } from "../dtos/user/user-update.dto";
 import { UserResponseDTO } from "../dtos/user/user-response.dto";
+import { UserNotFoundError } from "./exceptions/user-not-found.error";
 
 export class UserService {
     async getByIdWithPassword(id: string): Promise<UserResponseDTO | null> {
         const user: IUserDocument | null = await User.findById(id).select("+password");
 
         if (!user)
-            return null;
+            throw new UserNotFoundError();
 
         return new UserResponseDTO(
             user._id.toString(),
@@ -22,7 +23,7 @@ export class UserService {
             user.createdAt!,
             user.updatedAt!,
             user.password
-        ); 
+        );
     }
 
     async update(id: string, updateData: UserUpdateDTO): Promise<UserResponseDTO | null> {
@@ -35,8 +36,8 @@ export class UserService {
             { new: true }
         );
 
-        if (!user) 
-            return null;
+        if (!user)
+            throw new UserNotFoundError();
 
         return new UserResponseDTO(
             user._id.toString(),
@@ -51,11 +52,14 @@ export class UserService {
         );
     }
 
-    async delete(id: string): Promise<IUserDocument | null> {
-        return await User.findOneAndUpdate(
+    async delete(id: string): Promise<void> {
+        const deletedUser: IUserDocument | null = await User.findOneAndUpdate(
             { _id: id, active: true },
             { $set: { active: false } },
             { new: true }
         );
+
+        if (!deletedUser) 
+            throw new UserNotFoundError();
     }
 }
