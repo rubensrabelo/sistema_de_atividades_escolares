@@ -10,6 +10,7 @@ import { TokenResponseDTO } from "../dtos/auth/token-response.dto";
 import { IUserDocument } from "../models/interfaces/user.interface";
 import { InvalidCredentialsError } from "./exceptions/invalid-credentials.error";
 import { UserDeactivatedError } from "./exceptions/user-deactivated.error";
+import { EmailAlreadyExistsError } from "./exceptions/email-already-exists.error";
 
 export class AuthService {
     async register(data: RegisterDTO): Promise<UserResponseDTO> {
@@ -17,7 +18,7 @@ export class AuthService {
 
         const existingUser: IUserDocument | null = await User.findOne({ email });
         if (existingUser)
-            throw new Error("Email already registered.");
+            throw new EmailAlreadyExistsError();
 
         const hashedPassword: string = await bcrypt.hash(password, 10);
 
@@ -47,7 +48,7 @@ export class AuthService {
         const { email, password }: LoginDTO = data;
 
         const user: IUserDocument | null = await User.findOne({ email }).select("+password");
-        if (!user) 
+        if (!user)
             throw new InvalidCredentialsError();
 
         if (!user.active)

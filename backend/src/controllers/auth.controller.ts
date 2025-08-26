@@ -7,6 +7,7 @@ import { TokenResponseDTO } from "../dtos/auth/token-response.dto";
 import { UserResponseDTO } from "../dtos/user/user-response.dto";
 import { UserDeactivatedError } from "../services/exceptions/user-deactivated.error";
 import { InvalidCredentialsError } from "../services/exceptions/invalid-credentials.error";
+import { EmailAlreadyExistsError } from "../services/exceptions/email-already-exists.error";
 
 export class AuthController {
     private authService: AuthService;
@@ -21,6 +22,9 @@ export class AuthController {
             const userDTO: UserResponseDTO = await this.authService.register(data);
             return res.status(201).json({ message: "User registered successfully", userDTO });
         } catch (error: any) {
+            if (error instanceof EmailAlreadyExistsError)
+                return res.status(error.statusCode).json({ message: error.message })
+
             return res.status(400).json({ error: error.message });
         }
     }
