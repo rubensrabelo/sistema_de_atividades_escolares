@@ -2,6 +2,7 @@ import { Response } from "express";
 import { CourseService } from "../services/course.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
 import { CourseResponseDTO } from "../dtos/course/course-response.dto";
+import { CourseNotFoundError } from "../services/exceptions/course-not-found.error";
 
 interface PaginatedResponse<T> {
     data: T[];
@@ -32,11 +33,11 @@ export class CourseController {
             const { id } = req.params as { id: string };
             const course: CourseResponseDTO | null = await this.courseService.update(id, req.body);
 
-            if (!course)
-                return res.status(404).json({ message: "Course not found." });
-
             return res.status(200).json(course);
         } catch (error) {
+            if (error instanceof CourseNotFoundError)
+                return res.status(error.statusCode).json({ message: error.message });
+                
             return res.status(500).json({ message: "Error updating course.", error });
         }
     }
@@ -44,14 +45,13 @@ export class CourseController {
     async delete(req: AuthRequest, res: Response): Promise<Response> {
         try {
             const { id } = req.params as { id: string };
-            const course: CourseResponseDTO | null = await this.courseService.delete(id);
-
-            if (!course) {
-                return res.status(404).json({ message: "Course not found." });
-            }
+            await this.courseService.delete(id);
 
             return res.status(204).send();
         } catch (error) {
+            if (error instanceof CourseNotFoundError)
+                return res.status(error.statusCode).json({ message: error.message });
+        
             return res.status(500).json({ message: "Error deleting course.", error });
         }
     }

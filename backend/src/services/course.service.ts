@@ -3,6 +3,7 @@ import { ICourseDocument } from "../models/interfaces/course.interface";
 import { CourseCreateDTO } from "../dtos/course/course-create.dto";
 import { CourseUpdateDTO } from "../dtos/course/course-update.dto";
 import { CourseResponseDTO } from "../dtos/course/course-response.dto";
+import { CourseNotFoundError } from "./exceptions/course-not-found.error";
 
 export class CourseService {
   async create(data: CourseCreateDTO, userId: string): Promise<CourseResponseDTO> {
@@ -25,7 +26,7 @@ export class CourseService {
     const courseDTO: ICourseDocument | null = await Course.findByIdAndUpdate(id, { $set: data }, { new: true });
 
     if (!courseDTO)
-      return null;
+      throw new CourseNotFoundError();
 
     return new CourseResponseDTO(
       courseDTO.id,
@@ -37,20 +38,11 @@ export class CourseService {
     );
   }
 
-  async delete(id: string): Promise<CourseResponseDTO | null> {
+  async delete(id: string): Promise<void> {
     const courseDTO: ICourseDocument | null = await Course.findByIdAndUpdate(id, { $set: { active: false } }, { new: true });
 
     if (!courseDTO)
-      return null;
-
-    return new CourseResponseDTO(
-      courseDTO.id,
-      courseDTO.title,
-      courseDTO.active,
-      courseDTO.createBy,
-      courseDTO.createdAt!,
-      courseDTO.updatedAt!,
-    );
+      throw new CourseNotFoundError();
   }
 
   async getAll(
