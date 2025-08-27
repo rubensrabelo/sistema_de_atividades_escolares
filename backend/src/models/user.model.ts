@@ -1,5 +1,6 @@
 import mongoose, { Schema, Model } from "mongoose";
 import { IUserDocument } from "./interfaces/user.interface";
+import { UserRole } from "./enums/user-role.enum";
 
 const UserSchema = new Schema<IUserDocument>(
   {
@@ -9,8 +10,8 @@ const UserSchema = new Schema<IUserDocument>(
     password: { type: String, required: true, select: false },
     role: {
       type: String,
-      enum: ["student", "teacher"],
-      default: "student",
+      enum: Object.values(UserRole),
+      default: UserRole.STUDENT,
       required: true,
     },
     active: { type: Boolean, default: true },

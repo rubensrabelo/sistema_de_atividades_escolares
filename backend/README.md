@@ -13,7 +13,7 @@ classDiagram
     - lastName: string
     - email: string
     - password: string
-    - role: "student" | "teacher"
+    - role: UserRole
     - active: boolean
     - createdAt?: Date
     - updatedAt?: Date
@@ -26,19 +26,29 @@ classDiagram
   }
 
   class Course {
-    - title: string;
-    - description?: string;
-    - active: boolean;
-    - createBy: string | Types.ObjectId;
-    - students?: string | Types.ObjectId;
-    - createdAt?: Date;
-    - updatedAt?: Date;
+    - title: string
+    - description?: string
+    - active: boolean
+    - createBy: string | Types.ObjectId
+    - students?: string | Types.ObjectId
+    - createdAt?: Date
+    - updatedAt?: Date
+  }
+
+  class Topic {
+    - title: string
+    - description?: string
+    - type: TopicType
+    - course: string | Types.ObjectId
+    - createdAt?: Date
+    - updatedAt?: Date
   }
 
   User "1" <|-- Teacher
   User "1" <|-- Student
   Teacher "1" -- "*" Course: creates_a
   Student "1" -- "*" Course: enrolls_in
+  Course "1" -- "*" Topic: has_many
 ```
 
 
@@ -52,6 +62,7 @@ backend/
  │   ├─ controllers/               # Lógica das rotas (controllers com classes)
  │   ├─ services/                  # Serviços que lidam com a lógica de negócio
  │   ├─ models/                    # Modelos do banco de dados (Mongoose)
+ │   │    └─ enums/                # Enums para os modelos
  │   │    └─ interfaces/           # Interfaces TypeScript para os modelos
  │   ├─ dtos/                      # Data Transfer Objects para validação e respostas
  │   │    ├─ auth/                 # DTOs de autenticação (login, registro)
