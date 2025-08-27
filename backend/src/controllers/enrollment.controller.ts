@@ -3,6 +3,7 @@ import { AuthRequest } from "../middlewares/auth.middleware";
 import { EnrollmentService } from "../services/enrollment.service";
 import { EnrollmentResponseDTO } from "../dtos/enrollment/enrollment-response.dto";
 import { StudentCoursesResponseDTO } from "../dtos/course/student-courses-response.dto";
+import { CourseNotFoundError } from "../services/exceptions/course-not-found.error";
 
 export class EnrollmentController {
   private enrollmentService: EnrollmentService;
@@ -22,6 +23,9 @@ export class EnrollmentController {
       
       return res.status(200).json(course);
     } catch (error) {
+      if (error instanceof CourseNotFoundError)
+        return res.status(error.statusCode).json({ message: error.message });
+
       return res.status(500).json({ message: "Error enrolling", error });
     }
   }
@@ -32,12 +36,12 @@ export class EnrollmentController {
       const { courseId } = req.params as { courseId: string };
 
       const course: EnrollmentResponseDTO | null = await this.enrollmentService.unenrollStudent(courseId, studentId);
-
-      if (!course) 
-        return res.status(404).json({ message: "Course not found" });
       
       return res.status(200).json(course);
     } catch (error) {
+      if (error instanceof CourseNotFoundError)
+        return res.status(error.statusCode).json({ message: error.message });
+
       return res.status(500).json({ message: "Error unenrolling", error });
     }
   }

@@ -4,6 +4,7 @@ import { Types } from "mongoose";
 import { CourseResponseDTO } from "../dtos/course/course-response.dto";
 import { StudentCoursesResponseDTO } from "../dtos/course/student-courses-response.dto";
 import { EnrollmentResponseDTO } from "../dtos/enrollment/enrollment-response.dto";
+import { CourseNotFoundError } from "./exceptions/course-not-found.error";
 
 export class EnrollmentService {
   async enrollStudent(courseId: string, studentId: string): Promise<EnrollmentResponseDTO | null> {
@@ -14,7 +15,7 @@ export class EnrollmentService {
     );
 
     if (!course)
-      return null;
+      throw new CourseNotFoundError();
 
     const courseDTO: CourseResponseDTO = new CourseResponseDTO(
       course._id.toString(),
@@ -36,7 +37,8 @@ export class EnrollmentService {
       { new: true }
     );
 
-    if (!course) return null;
+    if (!course) 
+      throw new CourseNotFoundError();
 
     const courseDTO: CourseResponseDTO = new CourseResponseDTO(
       course._id.toString(),
