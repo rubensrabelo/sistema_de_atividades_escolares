@@ -13,12 +13,13 @@ export class CourseService {
     });
     const courseDTO: ICourseDocument = await course.save();
     return new CourseResponseDTO(
-      courseDTO.id,
+      courseDTO.id.toString(),
       courseDTO.title,
       courseDTO.active,
-      courseDTO.createBy,
+      courseDTO.createBy.toString(),
       courseDTO.createdAt!,
       courseDTO.updatedAt!,
+      courseDTO.description
     );
   }
 
@@ -29,10 +30,10 @@ export class CourseService {
       throw new CourseNotFoundError();
 
     return new CourseResponseDTO(
-      courseDTO.id,
+      courseDTO.id.toString(),
       courseDTO.title,
       courseDTO.active,
-      courseDTO.createBy,
+      courseDTO.createBy.toString(),
       courseDTO.createdAt!,
       courseDTO.updatedAt!,
     );
