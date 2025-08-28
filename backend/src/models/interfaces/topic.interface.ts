@@ -3,9 +3,9 @@ import { TopicType } from "../enums/topic-type.enum";
 
 export interface ITopic {
     title: string;
-    description: string;
+    description?: string;
     type: TopicType;
-    course: string | Types.ObjectId;
+    course_id: string | Types.ObjectId;
     createdAt?: Date;
     updatedAt?: Date;
 }
