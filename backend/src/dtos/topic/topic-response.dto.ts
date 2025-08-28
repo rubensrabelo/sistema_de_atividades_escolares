@@ -6,7 +6,7 @@ export class TopicResponseDTO {
     title: string;
     description?: string;
     type: TopicType;
-    course_id: string | Types.ObjectId;
+    courseId: string | Types.ObjectId;
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -14,7 +14,7 @@ export class TopicResponseDTO {
         id: string,
         title: string,
         type: TopicType,
-        course_id: string | Types.ObjectId,
+        courseId: string | Types.ObjectId,
         createdAt: Date,
         updatedAt: Date,
         description?: string
@@ -22,7 +22,7 @@ export class TopicResponseDTO {
         this.id = id,
         this.title = title,
         this.type = type,
-        this.course_id = course_id,
+        this.courseId = courseId,
         this.createdAt = createdAt,
         this.updatedAt = updatedAt
         

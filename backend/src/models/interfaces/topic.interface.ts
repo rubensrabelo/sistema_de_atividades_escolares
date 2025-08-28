@@ -5,7 +5,7 @@ export interface ITopic {
     title: string;
     description?: string;
     type: TopicType;
-    course_id: string | Types.ObjectId;
+    courseId: string | Types.ObjectId;
     createdAt?: Date;
     updatedAt?: Date;
 }

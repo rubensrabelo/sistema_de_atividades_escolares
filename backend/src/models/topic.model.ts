@@ -11,7 +11,7 @@ const TopicSchema = new Schema<ITopicDocument>(
       enum: Object.values(TopicType), 
       required: true 
     },
-    course_id: { type: Schema.Types.ObjectId, ref: "Course", required: true },
+    courseId: { type: Schema.Types.ObjectId, ref: "Course", required: true },
   },
   { timestamps: true }
 );
