@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
 import courseRouter from "./routes/course.routes";
 import enrollmentRouter from "./routes/enrollment.routes";
+import topicRouter from "./routes/topic.routes";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/enrollments", enrollmentRouter);
+app.use("/api/topics", topicRouter);
 
 connectDB();
 
