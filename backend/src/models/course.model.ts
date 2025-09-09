@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { ICourseDocument } from "./interfaces/course.interface";
 
 const courseSchema = new Schema<ICourseDocument>(
