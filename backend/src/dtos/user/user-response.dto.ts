@@ -1,35 +1,15 @@
+import { UserRole } from "../../models/enums/user-role.enum";
+
 export class UserResponseDTO {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password?: string;
-  active: boolean;
-  role: "student" | "teacher";
-  createdAt: Date;
-  updatedAt: Date;
-
   constructor(
-    id: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    role: "student" | "teacher",
-    active: boolean,
-    createdAt: Date,
-    updatedAt: Date,
-    password?: string
-  ) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.role = role;
-    this.active = active;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-
-    if(password) 
-      this.password = password;
-  }
+    public id: string,
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public role: UserRole,
+    public active: boolean,
+    public createdAt: Date,
+    public updatedAt: Date,
+    public password?: string
+  ) { }
 }

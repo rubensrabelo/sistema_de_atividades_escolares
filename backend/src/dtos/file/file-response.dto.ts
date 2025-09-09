@@ -9,5 +9,5 @@ export class FileResponseDTO {
     public topicId: string | Types.ObjectId,
     public createdAt: Date,
     public updatedAt: Date,
-  ) {}
+  ) { }
 }

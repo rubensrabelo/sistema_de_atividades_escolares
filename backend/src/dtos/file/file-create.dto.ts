@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, IsUrl } from "class-validator";
 
 export class FileCreateDTO {
   @IsString()
@@ -9,7 +9,7 @@ export class FileCreateDTO {
   @IsNotEmpty()
   savedName!: string;
   
-  @IsString()
+  @IsUrl()
   @IsNotEmpty()
   url!: string;
 }

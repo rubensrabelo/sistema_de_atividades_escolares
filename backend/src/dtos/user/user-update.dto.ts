@@ -1,6 +1,5 @@
 import { IsOptional, IsEnum, IsString, MinLength } from "class-validator";
-
-export type UserRole = "student" | "teacher";
+import { UserRole } from "../../models/enums/user-role.enum";
 
 export class UserUpdateDTO {
   @IsOptional()
