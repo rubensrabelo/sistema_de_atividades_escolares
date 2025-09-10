@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import { IFileDocument } from "./interfaces/file.interface";
 
-const fileSchema = new Schema<IFileDocument>(
+const FileSchema = new Schema<IFileDocument>(
   {
     name: { type: String, required: true },
     savedName: { type: String, required: true },
@@ -11,4 +11,4 @@ const fileSchema = new Schema<IFileDocument>(
   { timestamps: true }
 );
 
-export default model<IFileDocument>("File", fileSchema);
+export const File = model<IFileDocument>("File", FileSchema);

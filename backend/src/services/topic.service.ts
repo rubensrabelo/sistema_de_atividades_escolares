@@ -25,7 +25,7 @@ export class TopicService {
     }
 
 
-    async update(id: string, data: TopicUpdateDTO): Promise<TopicResponseDTO | null> {
+    async update(id: string, data: TopicUpdateDTO): Promise<TopicResponseDTO> {
         const topicUpdated: ITopicDocument | null = await Topic.findByIdAndUpdate(id, { $set: data }, { new: true });
 
         if (!topicUpdated)
@@ -49,7 +49,7 @@ export class TopicService {
             throw new TopicNotFoundError();
     }
 
-    async getById(id: string): Promise<TopicResponseDTO | null> {
+    async getById(id: string): Promise<TopicResponseDTO> {
         const topic: ITopicDocument | null = await Topic.findById(id);
 
         if (!topic)
