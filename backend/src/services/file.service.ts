@@ -5,11 +5,20 @@ import { File } from "../models/file.model";
 import { IFileDocument } from "../models/interfaces/file.interface";
 import { FileNotFoundError } from "./exceptions/file-not-found.error";
 
+export interface IFileUpload {
+  originalName: string;
+  fileName: string;
+  topicId: string;
+}
+
 
 export class FileService {
-    async upload(data: FileCreateDTO, topicId: string): Promise<FileResponseDTO> {
+    async upload({ originalName, fileName, topicId }: IFileUpload):
+        Promise<FileResponseDTO> {
         const file: IFileDocument = new File({
-            ...data,
+            name: originalName,
+            savedName: fileName,
+            url: `/uploads/${fileName}`,
             topicId,
         });
         const fileSaved: IFileDocument = await file.save();
