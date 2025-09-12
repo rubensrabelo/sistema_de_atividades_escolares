@@ -1,7 +1,6 @@
-import { FileCreateDTO } from "../dtos/file/file-create.dto";
 import { FileResponseDTO } from "../dtos/file/file-response.dto";
 import { FileUpdateDTO } from "../dtos/file/file-update.dto";
-import { File } from "../models/file.model";
+import { File } from "../models/File.model";
 import { IFileDocument } from "../models/interfaces/file.interface";
 import { FileNotFoundError } from "./exceptions/file-not-found.error";
 
@@ -10,7 +9,6 @@ export interface IFileUpload {
   fileName: string;
   topicId: string;
 }
-
 
 export class FileService {
     async upload({ originalName, fileName, topicId }: IFileUpload):
@@ -21,17 +19,9 @@ export class FileService {
             url: `/uploads/${fileName}`,
             topicId,
         });
-        const fileSaved: IFileDocument = await file.save();
 
-        return new FileResponseDTO(
-            fileSaved.id.toString(),
-            fileSaved.name,
-            fileSaved.savedName,
-            fileSaved.url,
-            fileSaved.topicId.toString(),
-            fileSaved.createdAt!,
-            fileSaved.updatedAt!,
-        );
+        const fileSaved: IFileDocument = await file.save();
+        return FileResponseDTO.fromDocument(fileSaved);
     }
 
     async update(id: string, data: FileUpdateDTO): Promise<FileResponseDTO> {
@@ -40,15 +30,7 @@ export class FileService {
         if (!fileUpdated)
             throw new FileNotFoundError();
 
-        return new FileResponseDTO(
-            fileUpdated.id.toString(),
-            fileUpdated.name,
-            fileUpdated.savedName,
-            fileUpdated.url,
-            fileUpdated.topicId.toString(),
-            fileUpdated.createdAt!,
-            fileUpdated.updatedAt!,
-        );
+        return FileResponseDTO.fromDocument(fileUpdated);
     }
 
     async delete(id: string): Promise<void> {
@@ -61,16 +43,6 @@ export class FileService {
     async getFilesByTopic(topicId: string): Promise<FileResponseDTO[]> {
         const files: IFileDocument[] = await File.find({ topicId });
 
-        return files.map(
-            file => new FileResponseDTO(
-                file.id.toString(),
-                file.name,
-                file.savedName,
-                file.url,
-                file.topicId.toString(),
-                file.createdAt!,
-                file.updatedAt!,
-            )
-        );
+        return files.map(FileResponseDTO.fromDocument)
     }
 }

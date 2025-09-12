@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { IFileDocument } from "../../models/interfaces/file.interface";
 
 export class FileResponseDTO {
   constructor(
@@ -10,4 +11,16 @@ export class FileResponseDTO {
     public createdAt: Date,
     public updatedAt: Date,
   ) { }
+
+  static fromDocument(doc: IFileDocument): FileResponseDTO {
+    return new FileResponseDTO(
+      doc.id.toString(),
+      doc.name,
+      doc.savedName,
+      doc.url,
+      String(doc.topicId),
+      doc.createdAt!,
+      doc.updatedAt!,
+    );
+  }
 }
