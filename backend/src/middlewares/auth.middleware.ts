@@ -10,26 +10,32 @@ export interface AuthRequest extends Request {
   files?: Express.Multer.File[];
 }
 
-export async function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+export async function authMiddleware(
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Missing or invalid token" });
+    res.status(401).json({ message: "Missing or invalid token" });
+    return;
   }
 
-  const token = authHeader.split(" ")[1];
+  const token: string | undefined = authHeader.split(" ")[1];
 
   try {
     const decoded = jwt.verify(token, ENV.JWT_SECRET) as { id: string; email: string; role: string };
 
     const user = await User.findById(decoded.id);
     if (!user || !user.active) {
-      return res.status(401).json({ message: "User is deactivated" });
+      res.status(401).json({ message: "User is deactivated" });
+      return;
     }
 
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
+    res.status(401).json({ message: "Invalid token" });
   }
 }
