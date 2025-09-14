@@ -6,9 +6,11 @@ import User from "../models/user.model";
 
 export interface AuthRequest extends Request {
   user?: { id: string; email: string; role: string };
+  file?: Express.Multer.File;
+  files?: Express.Multer.File[];
 }
 
-export async  function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+export async function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
