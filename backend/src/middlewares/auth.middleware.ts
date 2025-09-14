@@ -7,7 +7,7 @@ import User from "../models/user.model";
 export interface AuthRequest extends Request {
   user?: { id: string; email: string; role: string };
   file?: Express.Multer.File;
-  files?: Express.Multer.File[];
+  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
 }
 
 export async function authMiddleware(

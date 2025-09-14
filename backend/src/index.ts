@@ -8,17 +8,19 @@ import userRouter from "./routes/user.routes";
 import courseRouter from "./routes/course.routes";
 import enrollmentRouter from "./routes/enrollment.routes";
 import topicRouter from "./routes/topic.routes";
+import fileRouter from "./routes/file.routes"
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth", authRouter);
-app.use("/api/users", userRouter);
-app.use("/api/courses", courseRouter);
-app.use("/api/enrollments", enrollmentRouter);
-app.use("/api/topics", topicRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/courses", courseRouter);
+app.use("/api/v1/enrollments", enrollmentRouter);
+app.use("/api/v1/topics", topicRouter);
+app.use("/api/v1/files", fileRouter);
 
 connectDB();
 

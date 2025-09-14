@@ -4,6 +4,7 @@ import multer from "multer";
 import { FileController } from "../controllers/file.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { hasRole } from "../middlewares/role.middleware";
+import { asyncHandler } from "../helpers/async.handler";
 
 const router = Router();
 const fileController = new FileController();
@@ -17,7 +18,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.use(authMiddleware);
+router.use(asyncHandler(authMiddleware));
 
 router.post(
   "/:topicId/upload",
