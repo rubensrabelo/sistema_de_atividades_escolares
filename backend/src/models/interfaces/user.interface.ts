@@ -1,5 +1,6 @@
 import { Document, Types } from "mongoose";
-import { UserRole } from "../../dtos/auth/register.dto";
+import { UserRole } from "../enums/user-role.enum";
+
 
 export interface IUser {
   firstName: string;

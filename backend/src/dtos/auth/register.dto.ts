@@ -1,6 +1,5 @@
 import { IsEmail, IsEnum, IsNotEmpty, MinLength } from "class-validator";
-
-export type UserRole = "student" | "teacher";
+import { UserRole } from "../../models/enums/user-role.enum";
 
 export class RegisterDTO {
   @IsNotEmpty({ message: "First name is required" })
@@ -15,6 +14,6 @@ export class RegisterDTO {
   @MinLength(6, { message: "Password must be at least 6 characters" })
   password!: string;
 
-  @IsEnum(["student", "teacher"], { message: "Role must be student or teacher" })
+  @IsEnum(UserRole, { message: "Role must be student or teacher" })
   role!: UserRole;
 }
