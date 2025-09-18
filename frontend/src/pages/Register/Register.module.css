@@ -1,0 +1,39 @@
+.registerContainer {
+  max-width: 400px;
+  margin: 5rem auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.registerContainer h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.registerContainer form {
+  display: flex;
+  flex-direction: column;
+}
+
+.registerContainer input,
+.registerContainer select {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.registerContainer button {
+  padding: 0.8rem;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.registerContainer button:hover {
+  background: #388e3c;
+}
