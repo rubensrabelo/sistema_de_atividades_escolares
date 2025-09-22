@@ -1,9 +1,23 @@
+import { useState } from "react";
 import styles from "./Login.module.css";
+import { login } from "../../api/services/auth/login-request.service";
 
 function Login() {
-    const handleSubmit = (e: React.FormEvent) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert("Login feito com sucesso!")
+
+        try {
+            const userData = await login({ email, password });
+            localStorage.setItem("token", userData.token);
+
+            alert("Login successful!");
+        } catch (error) {
+            setError("Invalid credentials.")
+        }
     };
 
     return (
@@ -11,8 +25,21 @@ function Login() {
             <div className={styles.loginContainer}>
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
-                    <input type="email" name="email" placeholder="Digite seu email" required />
-                    <input type="password" name="password" placeholder="Digite a sua senha" required />
+                    <input
+                        type="email"
+                        placeholder="Digite seu email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Digite a sua senha"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                    />
+                    { error && <p className={styles.error}>{error}</p> }
                     <button type="submit">Entrar</button>
                 </form>
             </div>
