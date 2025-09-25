@@ -10,7 +10,10 @@ export async function register(data: RegisterRequest) {
   });
 
   if (!response.ok) {
+    // Não está pegando as informações de erro que está vindo do backend
+    
     const errorData = await response.json().catch(() => null);
+    console.log(errorData)
     const message = errorData?.message || "Registro falhou.";
     throw new AuthError(message, response.status);
   }
