@@ -2,6 +2,12 @@
 
 ---
 
+## 2025-09-30
+
+- Finalizado o **roadmap** do projeto, incluindo o MVP, a fase 1 e Futuro.
+
+---
+
 ## 2025-09-29
 
 - Criada a pasta `docs/` com os arquivos de documentação: `roadmap.md`, `next_steps.md`, `session_logs.md` e `references.md`.  
