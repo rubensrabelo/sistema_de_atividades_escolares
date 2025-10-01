@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Register.module.css";
 import { register } from "../../api/services/auth/register-request.service";
+import { AuthError } from "../../api/services/errors/auth.error";
 
 function Register() {
     const [form, setForm] = useState({
@@ -18,12 +19,17 @@ function Register() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
         try {
             await register(form);
             alert("Registration completed successfully.");
         } catch (error) {
-            setError("Error when registering");
+            if (error instanceof AuthError) {
+                setError(error.message);
+            } else {
+                setError("Unexpected error when registering.");
+            }
         }
     };
 

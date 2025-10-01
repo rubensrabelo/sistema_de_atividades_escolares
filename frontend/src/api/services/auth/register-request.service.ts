@@ -1,5 +1,6 @@
 import ENV from "../../../configs/env.config";
 import type { RegisterRequest } from "../../interface/register-request.interfce";
+import { parseErrorResponse } from "../../utils/parse-error-response";
 import { AuthError } from "../errors/auth.error";
 
 export async function register(data: RegisterRequest) {
@@ -10,12 +11,8 @@ export async function register(data: RegisterRequest) {
   });
 
   if (!response.ok) {
-    // Não está pegando as informações de erro que está vindo do backend
-    
-    const errorData = await response.json().catch(() => null);
-    console.log(errorData)
-    const message = errorData?.message || "Registro falhou.";
-    throw new AuthError(message, response.status);
+    const { message, status } = await parseErrorResponse(response);
+    throw new AuthError(message, status);
   }
 
   return response.json();

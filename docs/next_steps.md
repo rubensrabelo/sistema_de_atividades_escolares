@@ -24,10 +24,9 @@
 * [x] Configurar o projeto em **React + TypeScript**.
 * [x] Implementar fluxo de **login**.
 * [x] Implementar fluxo de **registro**.
-* [ ] Adicionar melhoria no fluxo de **registro**.
-* [ ] Criar dashboard inicial para professores (listar e criar disciplinas).
-* [ ] Criar dashboard inicial para alunos (listar disciplinas e acessar tópicos).
-* [ ] Implementar tela de visualização e upload de arquivos.
+* [x] Adicionar melhoria no fluxo de **registro** e de **login** - Teste ok.
+* [ ] Criar home para professores.
+* [ ] Criar home para alunos.
 
 ---
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Login.module.css";
 import { login } from "../../api/services/auth/login-request.service";
+import { AuthError } from "../../api/services/errors/auth.error";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ function Login() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
         try {
             const userData = await login({ email, password });
@@ -16,7 +18,11 @@ function Login() {
 
             alert("Login successful!");
         } catch (error) {
-            setError("Invalid credentials.")
+            if (error instanceof AuthError) {
+                setError(error.message);
+            } else {
+                setError("Unexpected error when registering.");
+            }
         }
     };
 
@@ -39,7 +45,7 @@ function Login() {
                         onChange={e => setPassword(e.target.value)}
                         required
                     />
-                    { error && <p className={styles.error}>{error}</p> }
+                    {error && <p className={styles.error}>{error}</p>}
                     <button type="submit">Entrar</button>
                 </form>
             </div>
