@@ -1,7 +1,9 @@
+import type { UserRole } from "../../enums/user-role.enum";
+
 export interface RegisterRequest {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
-    role: string;
+    role: UserRole;
 }

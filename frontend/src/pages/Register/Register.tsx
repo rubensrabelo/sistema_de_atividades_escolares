@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./Register.module.css";
 import { register } from "../../api/services/auth/register-request.service";
 import { AuthError } from "../../api/services/errors/auth.error";
+import { UserRole } from "../../api/enums/user-role.enum";
 
 function Register() {
     const [form, setForm] = useState({
@@ -9,7 +10,7 @@ function Register() {
         lastName: "",
         email: "",
         password: "",
-        role: "",
+        role: "" as UserRole,
     });
     const [error, setError] = useState("");
 
@@ -72,8 +73,8 @@ function Register() {
                     />
                     <select name="role" value={form.role} onChange={handleChange} required>
                         <option value="">Selecione o papel</option>
-                        <option value="student">Aluno</option>
-                        <option value="teacher">Professor</option>
+                        <option value={UserRole.STUDENT}>Aluno</option>
+                        <option value={UserRole.TEACHER}>Professor</option>
                     </select>
 
                     {error && <p className={styles.error}>{error}</p>}

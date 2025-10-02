@@ -1,5 +1,5 @@
 import ENV from "../../../configs/env.config"
-import type { LoginRequest } from "../../interface/login-request.interface";
+import type { LoginRequest } from "../../interface/auth/login-request.interface";
 import { parseErrorResponse } from "../../utils/parse-error-response";
 import { AuthError } from "../errors/auth.error";
 

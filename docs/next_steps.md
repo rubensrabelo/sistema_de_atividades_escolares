@@ -26,6 +26,10 @@
 * [x] Implementar fluxo de **registro**.
 * [x] Adicionar melhoria no fluxo de **registro** e de **login** - Teste ok.
 * [ ] Criar home para professores.
+    * [x] Criar interface User
+    * [x] Criar interface Course
+    * [ ] Criar services
+    * [ ] Criar tela
 * [ ] Criar home para alunos.
 
 ---

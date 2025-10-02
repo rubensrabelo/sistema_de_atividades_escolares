@@ -1,5 +1,5 @@
 import ENV from "../../../configs/env.config";
-import type { RegisterRequest } from "../../interface/register-request.interfce";
+import type { RegisterRequest } from "../../interface/auth/register-request.interfce";
 import { parseErrorResponse } from "../../utils/parse-error-response";
 import { AuthError } from "../errors/auth.error";
 
