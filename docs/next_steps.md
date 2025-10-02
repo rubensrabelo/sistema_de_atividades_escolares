@@ -2,9 +2,6 @@
 
 ## 📚 Estudos
 
-* [ ] Consolidar práticas de **boas práticas em Node.js + TypeScript** (estruturas de projeto, DTOs, middlewares).
-* [ ] Revisar fundamentos de **MongoDB** (indexação, consultas eficientes, relacionamentos).
-* [ ] Estudar **boas práticas em React + TypeScript** para organização de componentes.
 * [ ] Introdução a **testes automatizados** (Jest para backend, Testing Library para frontend).
 
 ---
@@ -25,6 +22,9 @@
 * [x] Implementar fluxo de **login**.
 * [x] Implementar fluxo de **registro**.
 * [x] Adicionar melhoria no fluxo de **registro** e de **login** - Teste ok.
+* [x] Mudar o fluxo App.
+    * [x] Criar rotas públicas e privatas.
+    * [x] Pegar o Token.
 * [ ] Criar home para professores.
     * [x] Criar interface User
     * [x] Criar interface Course
@@ -36,8 +36,8 @@
 
 ## Infra
 
-* [ ] Refinar o **docker-compose** (rede dedicada, volume nomeado para MongoDB).
-* [ ] Criar arquivos `.env.example` para backend e frontend.
+* [x] Refinar o **docker-compose** (rede dedicada, volume nomeado para MongoDB).
+* [x] Criar arquivos `.env.example` para backend e frontend.
 * [ ] Configurar ambientes separados para **desenvolvimento** e **produção**.
 * [ ] Avaliar CI/CD simples (ex.: GitHub Actions) para rodar testes a cada commit.
 
