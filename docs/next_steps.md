@@ -2,17 +2,17 @@
 
 ## 📚 Estudos
 
-* [ ] Introdução a **testes automatizados** (Jest para backend, Testing Library para frontend).
+* [ ] Introdução a **testes automatizados** no Backend.
+* [ ] Introdução a **testes automatizados** no Frontend.
 
 ---
 
 ## Backend
 
 * [ ] Aplicar **injeção de dependência** para melhorar a testabilidade e reduzir acoplamento.
-* [ ] Criar **testes unitários básicos** (ex.: autenticação, criação de disciplinas).
-* [ ] Melhorar as **validações nos DTOs**.
 * [ ] Implementar documentação da API com **Swagger/OpenAPI**.
 * [ ] Adicionar **logs básicos** (requests, erros e operações críticas).
+* [ ] Criar **testes unitários básicos** (ex.: autenticação, criação de disciplinas).
 
 ---
 
@@ -37,8 +37,6 @@
 ## Infra
 
 * [x] Refinar o **docker-compose** (rede dedicada, volume nomeado para MongoDB).
-* [x] Criar arquivos `.env.example` para backend e frontend.
-* [ ] Configurar ambientes separados para **desenvolvimento** e **produção**.
-* [ ] Avaliar CI/CD simples (ex.: GitHub Actions) para rodar testes a cada commit.
+* [x] Criar arquivos `.env-example` para backend e frontend.
 
 ---
